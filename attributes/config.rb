@@ -1,0 +1,27 @@
+# default LWRP resource instance attributes
+default['varnish']['instance']['enable_varnishlog'] =  false
+default['varnish']['instance']['enable_varnishncsa'] = true
+default['varnish']['instance']['ncsa_log_format'] = '%t %h %{Host}i %l %u \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\" %{X-Cache}o'
+default['varnish']['instance']['service_supports'] = nil
+default['varnish']['instance']['service_action'] = [:start, :enable]
+default['varnish']['instance']['ignore_local_change'] = false
+default['varnish']['instance']['notify_restart'] = true
+default['varnish']['instance']['storage_type'] = 'file'
+default['varnish']['instance']['storage_size'] = '1G'
+default['varnish']['instance']['thread_pools'] = node.attribute?(['cpu']) ? node['cpu']['total'] : 1
+default['varnish']['instance']['thread_pool_delay'] = 1
+default['varnish']['instance']['min_threads'] = 256
+default['varnish']['instance']['max_threads'] = 5000
+default['varnish']['instance']['thread_timeout'] = 60
+default['varnish']['instance']['sess_workspace'] = nil
+default['varnish']['instance']['nfiles'] = 131_072
+default['varnish']['instance']['memlock'] = 82_000
+default['varnish']['instance']['nprocs'] = 'unlimited'
+default['varnish']['instance']['corefile'] = 'unlimited'
+default['varnish']['instance']['reload_vcl'] = 1
+default['varnish']['instance']['ttl'] = 3600
+default['varnish']['instance']['options'] = []
+default['varnish']['instance']['vcl_conf_cookbook'] = 'varnish_ng'
+default['varnish']['instance']['vcl_conf_file'] = nil
+default['varnish']['instance']['vcl_conf_template'] = nil
+default['varnish']['instance']['vcl_conf_template_attrs'] = {}
