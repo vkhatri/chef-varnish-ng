@@ -1,4 +1,4 @@
-<%= @log_dir -%>/<%= @instance -%>*.log {
+<%= @log_dir -%>/varnishncsa-<%= @instance -%>.log <%= @log_dir -%>/varnish-<%= @instance -%>.log {
   daily
   rotate 7
   missingok

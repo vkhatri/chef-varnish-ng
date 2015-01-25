@@ -24,7 +24,7 @@
 retval=0
 pidfile="/var/run/varnishncsa-<%= @instance -%>.pid"
 lockfile="/var/lock/subsys/varnishncsa-<%= @instance -%>"
-logfile="<%= @log_dir -%>/<%= @instance -%>-varnishncsa.log"
+logfile="<%= @log_dir -%>/varnishncsa-<%= @instance -%>.log"
 
 exec="/usr/bin/varnishncsa"
 prog="varnishncsa"

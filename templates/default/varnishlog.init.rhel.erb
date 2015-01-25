@@ -24,7 +24,7 @@
 retval=0
 pidfile="/var/run/varnishlog-<%= @instance -%>.pid"
 lockfile="/var/lock/subsys/varnishlog-<%= @instance -%>"
-logfile="<%= @log_dir -%>/<%= @instance -%>-varnislog.log"
+logfile="<%= @log_dir -%>/varnish-<%= @instance -%>.log"
 
 exec="/usr/bin/varnishlog"
 prog="varnishlog"
