@@ -36,4 +36,7 @@ default['varnish']['log_dir'] = '/var/log/varnish'
 # varnish storage directory
 default['varnish']['storage_dir'] = '/var/lib/varnish'
 
-default['varnish']['varnish_reload_exec'] = '/usr/sbin/varnish_reload_vcl_instance'
+default['varnish']['varnish_reload_exec'] = value_for_platform_family(
+  'rhel' => '/usr/sbin/varnish_reload_vcl_instance',
+  'debian' => '/usr/share/varnish/reload-vcl-instance'
+)
