@@ -97,7 +97,7 @@ action :create do
     only_if { new_resource.enable_varnishncsa }
   end
 
-  template "/etc/logrotate.d/#{new_resource.name}" do
+  template "/etc/logrotate.d/#{instance}" do
     cookbook 'varnish_ng'
     source "logrotate.#{node['platform_family']}.erb"
     owner 'root'
@@ -168,7 +168,7 @@ action :delete do
     action :delete
   end
 
-  file "/etc/logrotate.d/#{new_resource.name}" do
+  file "/etc/logrotate.d/#{instance}" do
     action :delete
   end
 
