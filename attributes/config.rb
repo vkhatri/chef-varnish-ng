@@ -1,10 +1,9 @@
 # default LWRP resource instance attributes
 default['varnish']['instance']['enable_varnishlog'] =  false
-default['varnish']['instance']['enable_varnishncsa'] = true
-default['varnish']['instance']['ncsa_log_format'] = '%t %h %{Host}i %l %u \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\" %{X-Cache}o'
+default['varnish']['instance']['enable_varnishncsa'] = false
+default['varnish']['instance']['ncsa_log_format'] = '%h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\"'
 default['varnish']['instance']['service_supports'] = nil
 default['varnish']['instance']['service_action'] = [:start, :enable]
-default['varnish']['instance']['ignore_local_change'] = false
 default['varnish']['instance']['notify_restart'] = true
 default['varnish']['instance']['storage_type'] = 'file'
 default['varnish']['instance']['storage_size'] = '1G'
