@@ -26,7 +26,6 @@ attribute :enable_varnishncsa,  :kind_of => [TrueClass, FalseClass], :default =>
 attribute :varnishncsa_format,  :kind_of => String, :default => node['varnish']['instance']['varnishncsa_log_format']
 attribute :service_supports,    :kind_of => Hash, :default => node['varnish']['instance']['service_supports']
 attribute :service_action,      :kind_of => Array, :default => node['varnish']['instance']['service_action']
-attribute :ignore_local_change, :kind_of => [TrueClass, FalseClass], :default => node['varnish']['instance']['ignore_local_change']
 attribute :notify_restart,      :kind_of => [TrueClass, FalseClass], :default => node['varnish']['instance']['notify_restart']
 
 attribute :start,         :kind_of => [TrueClass, FalseClass], :default => true
@@ -49,7 +48,7 @@ attribute :nprocs, :kind_of => [String, Integer], :default => node['varnish']['i
 attribute :corefile, :kind_of => [String, Integer], :default => node['varnish']['instance']['corefile']
 attribute :reload_vcl,  :kind_of => [String, Integer], :default => node['varnish']['instance']['reload_vcl']
 attribute :ttl,     :kind_of => [String, Integer], :default => node['varnish']['instance']['ttl']
-attribute :options, :kind_of => Array, :default => node['varnish']['instance']['options']
+attribute :options, :kind_of => Hash, :default => node['varnish']['instance']['options']
 
 attribute :vcl_conf_cookbook,   :kind_of => String, :default => node['varnish']['instance']['options']
 # vcl config file from cookbook, if defines overrides :vcl_conf_template

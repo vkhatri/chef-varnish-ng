@@ -100,8 +100,10 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
              -p thread_pool_max=${VARNISH_MAX_THREADS} \
              -p thread_pool_timeout=${VARNISH_THREAD_TIMEOUT} \
              <% unless @options.empty? -%>
-             <% @options.each do |option| %>
-             -p <%= option %> \
+             <% Hash[@options.sort].each do |key, value| %>
+             <% if key && value -%>
+             -p <%= key -%>=<%= value -%> \
+             <% end -%>
              <% end -%>
              <% end -%>
              -s ${VARNISH_STORAGE}"
