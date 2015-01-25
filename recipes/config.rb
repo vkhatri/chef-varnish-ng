@@ -27,20 +27,20 @@ file ::File.join(node['varnish']['conf_dir'], 'secret') do
   only_if { node['varnish']['manage_secret'] && node['varnish']['secret'] }
 end
 
-template '/usr/sbin/varnish_reload_vcl_instance' do
-  source 'varnish_reload_vcl_instance.erb'
+template node['varnish']['varnish_reload_exec'] do
+  source "varnish_reload_exec.#{node['platform_family']}.erb"
   mode 0755
 end
 
 directory node['varnish']['log_dir'] do
-  owner node['varnish']['userlog']
-  group node['varnish']['grouplog']
-  mode 0755
+  if node['platform_family'] == 'debian'
+    owner node['varnish']['userlog']
+    group node['varnish']['grouplog']
+  end
+  mode 0755 # keeping it sane, varies for platform_family
 end
 
 directory node['varnish']['storage_dir'] do
-  owner node['varnish']['userlog']
-  group node['varnish']['grouplog']
   mode 0755
 end
 
