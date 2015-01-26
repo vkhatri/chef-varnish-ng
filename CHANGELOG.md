@@ -3,7 +3,7 @@ varnish_ng CHANGELOG
 
 This file is used to list changes made in each version of the varnish_ng cookbook.
 
-0.1.0
+0.1.1
 -----
 - Virender Khatri - Initial release of varnish_ng
 
