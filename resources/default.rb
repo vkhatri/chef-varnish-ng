@@ -50,7 +50,7 @@ attribute :reload_vcl,  :kind_of => [String, Integer], :default => node['varnish
 attribute :ttl,     :kind_of => [String, Integer], :default => node['varnish']['instance']['ttl']
 attribute :options, :kind_of => Hash, :default => node['varnish']['instance']['options']
 
-attribute :vcl_conf_cookbook,   :kind_of => String, :default => node['varnish']['instance']['options']
+attribute :vcl_conf_cookbook,   :kind_of => String, :default => node['varnish']['instance']['vcl_conf_cookbook']
 # vcl config file from cookbook, if defines overrides :vcl_conf_template
 attribute :vcl_conf_file,       :kind_of => String, :default => node['varnish']['instance']['vcl_conf_file']
 attribute :vcl_conf_template,   :kind_of => String, :default => node['varnish']['instance']['vcl_conf_template']
