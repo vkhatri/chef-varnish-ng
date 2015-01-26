@@ -44,22 +44,13 @@ action :create do
               :admin_listen_port => new_resource.admin_listen_port,
               :storage_type => new_resource.storage_type,
               :storage_size => new_resource.storage_size,
-              :thread_pools => new_resource.thread_pools,
-              :thread_pool_delay => new_resource.thread_pool_delay,
-              :min_threads => new_resource.min_threads,
-              :max_threads => new_resource.max_threads,
-              :thread_timeout => new_resource.thread_timeout,
               :nfiles => new_resource.nfiles,
               :memlock => new_resource.memlock,
               :nprocs => new_resource.nprocs,
               :corefile => new_resource.corefile,
               :reload_vcl => new_resource.reload_vcl,
               :ttl => new_resource.ttl,
-              :options => new_resource.options,
-              :vcl_conf_cookbook => new_resource.vcl_conf_cookbook,
-              :vcl_conf_file => new_resource.vcl_conf_file,
-              :vcl_conf_template => new_resource.vcl_conf_template,
-              :vcl_conf_template_attrs => new_resource.vcl_conf_template_attrs
+              :options => new_resource.options
              )
     notifies :restart, "service[#{instance}]", :delayed if new_resource.notify_restart
   end
@@ -151,46 +142,28 @@ end
 action :delete do
   instance = "varnish-#{new_resource.name}"
 
-  # stop varnish services
-  service instance do
-    action [:disable, :stop]
+  # stop varnish* services
+  [instance,
+   "varnishlog-#{new_resource.name}",
+   "varnishncsa-#{new_resource.name}"
+  ].each do |s|
+    service s do
+      action [:disable, :stop]
+    end
   end
 
-  service "varnishlog-#{new_resource.name}" do
-    action [:disable, :stop]
-  end
-
-  service "varnishncsa-#{new_resource.name}" do
-    action [:disable, :stop]
-  end
-
-  file ::File.join(node['varnish']['conf_dir'], instance) do
-    action :delete
-  end
-
-  file "/etc/logrotate.d/#{instance}" do
-    action :delete
-  end
-
-  # removes config / init files
-  file ::File.join(node['varnish']['sysconf_dir'], instance) do
-    action :delete
-  end
-
-  file "/etc/init.d/#{instance}" do
-    action :delete
-  end
-
-  file "/etc/init.d/varnishlog-#{new_resource.name}" do
-    action :delete
-  end
-
-  file "/etc/init.d/varnishncsa-#{new_resource.name}" do
-    action :delete
-  end
-
-  file ::File.join(node['varnish']['storage_dir'], "#{instance}.bin") do
-    action :delete
+  # remove varnish* files
+  [::File.join(node['varnish']['conf_dir'], instance),
+   "/etc/logrotate.d/#{instance}",
+   ::File.join(node['varnish']['sysconf_dir'], instance),
+   "/etc/init.d/#{instance}",
+   "/etc/init.d/varnishlog-#{new_resource.name}",
+   "/etc/init.d/varnishncsa-#{new_resource.name}",
+   ::File.join(node['varnish']['storage_dir'], "#{instance}.bin")
+  ].each do |f|
+    file f do
+      action :delete
+    end
   end
 
   new_resource.updated_by_last_action(false)
