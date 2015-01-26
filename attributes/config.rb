@@ -7,19 +7,19 @@ default['varnish']['instance']['service_action'] = [:start, :enable]
 default['varnish']['instance']['notify_restart'] = true
 default['varnish']['instance']['storage_type'] = 'file'
 default['varnish']['instance']['storage_size'] = '1G'
-default['varnish']['instance']['thread_pools'] = node.attribute?(['cpu']) ? node['cpu']['total'] : 1
-default['varnish']['instance']['thread_pool_delay'] = 1
-default['varnish']['instance']['min_threads'] = 256
-default['varnish']['instance']['max_threads'] = 5000
-default['varnish']['instance']['thread_timeout'] = 60
-default['varnish']['instance']['sess_workspace'] = nil
 default['varnish']['instance']['nfiles'] = 131_072
 default['varnish']['instance']['memlock'] = 82_000
 default['varnish']['instance']['nprocs'] = 'unlimited'
 default['varnish']['instance']['corefile'] = 'unlimited'
 default['varnish']['instance']['reload_vcl'] = 1
 default['varnish']['instance']['ttl'] = 3600
-default['varnish']['instance']['options'] = {}
+
+# Few common confiugurable varnish service parameters
+default['varnish']['instance']['options']['thread_pools'] = node.attribute?(['cpu']) ? node['cpu']['total'] : 1
+default['varnish']['instance']['options']['thread_pool_min'] = 100
+default['varnish']['instance']['options']['thread_pool_max'] = 5000
+default['varnish']['instance']['options']['thread_pool_timeout'] = 60
+
 default['varnish']['instance']['vcl_conf_cookbook'] = 'varnish_ng'
 default['varnish']['instance']['vcl_conf_file'] = nil
 default['varnish']['instance']['vcl_conf_template'] = nil

@@ -36,17 +36,13 @@ attribute :listen_address,  :kind_of => String, :default => nil
 attribute :listen_port,     :kind_of => [String, Integer], :required => true, :default => nil
 attribute :admin_listen_address, :kind_of => String, :default => '127.0.0.1'
 attribute :admin_listen_port,   :kind_of => [String, Integer], :default => nil
-attribute :thread_pools,        :kind_of => [String, Integer], :default => node['varnish']['instance']['thread_pools']
-attribute :thread_pool_delay, :kind_of => [String, Integer], :default => node['varnish']['instance']['thread_pool_delay']
-attribute :min_threads, :kind_of => [String, Integer], :default => node['varnish']['instance']['min_threads']
-attribute :max_threads, :kind_of => [String, Integer], :default => node['varnish']['instance']['max_threads']
-attribute :thread_timeout,  :kind_of => [String, Integer], :default => node['varnish']['instance']['thread_timeout']
 attribute :nfiles,  :kind_of => [String, Integer], :default => node['varnish']['instance']['nfiles']
 attribute :memlock, :kind_of => [String, Integer], :default => node['varnish']['instance']['memlock']
 attribute :nprocs, :kind_of => [String, Integer], :default => node['varnish']['instance']['nprocs']
 attribute :corefile, :kind_of => [String, Integer], :default => node['varnish']['instance']['corefile']
 attribute :reload_vcl,  :kind_of => [String, Integer], :default => node['varnish']['instance']['reload_vcl']
 attribute :ttl,     :kind_of => [String, Integer], :default => node['varnish']['instance']['ttl']
+
 attribute :options, :kind_of => Hash, :default => node['varnish']['instance']['options']
 
 attribute :vcl_conf_cookbook,   :kind_of => String, :default => node['varnish']['instance']['vcl_conf_cookbook']

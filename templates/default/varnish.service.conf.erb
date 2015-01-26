@@ -48,21 +48,8 @@ VARNISH_ADMIN_LISTEN_ADDRESS=<%= @admin_listen_address %>
 VARNISH_ADMIN_LISTEN_PORT=<%= @admin_listen_port %>
 #
 # # Shared secret file for admin interface
+# -s ${VARNISH_SECRET_FILE} \
 VARNISH_SECRET_FILE=<%= @secret_file %>
-#
-# # Numbers of CPU Cores for Thread Pool
-VARNISH_THREAD_POOLS=<%= @thread_pools %>
-# # The minimum number of worker threads to start
-VARNISH_MIN_THREADS=<%= @min_threads %>
-#
-# # The Maximum number of worker threads to start
-VARNISH_MAX_THREADS=<%= @max_threads %>
-#
-# # Idle timeout for worker threads
-VARNISH_THREAD_TIMEOUT=<%= @thread_timeout %>
-#
-# # thread pool delay
-VARNISH_THREAD_POOL_DELAY=<%= @thread_pool_delay %>
 #
 # -w ${VARNISH_MIN_THREADS},${VARNISH_MAX_THREADS},${VARNISH_THREAD_TIMEOUT} \
 # # Cache file location
@@ -97,13 +84,7 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
              <% end -%>
              -t ${VARNISH_TTL} \
              -u <%= @user -%> -g <%= @group -%> \
-             <% if @secret_file -%>
              -S ${VARNISH_SECRET_FILE} \
-             <% end -%>
-             -p thread_pools=${VARNISH_THREAD_POOLS} \
-             -p thread_pool_min=${VARNISH_MIN_THREADS} \
-             -p thread_pool_max=${VARNISH_MAX_THREADS} \
-             -p thread_pool_timeout=${VARNISH_THREAD_TIMEOUT} \
              <% unless @options.empty? -%>
              <% Hash[@options.sort].each do |key, value| %>
              <% if key && value -%>
