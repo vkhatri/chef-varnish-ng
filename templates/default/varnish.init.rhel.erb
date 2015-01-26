@@ -93,7 +93,7 @@ start() {
 }
 
 stop() {
-	echo -n "Stopping Varnish Cache: "
+	echo -n "Stopping Varnish Cache instance <%= @instance -%>: "
 	killproc -p $pidfile $prog
 	retval=$?
 	echo
