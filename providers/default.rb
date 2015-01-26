@@ -131,7 +131,7 @@ action :create do
 
   service "varnishncsa-#{new_resource.name}" do
     supports new_resource.service_supports
-    action new_resource.enable_varnishlog ? [:start, :enable] : [:stop, :disable]
+    action new_resource.enable_varnishncsa ? [:start, :enable] : [:stop, :disable]
   end
 
   new_resource.updated_by_last_action(false)
