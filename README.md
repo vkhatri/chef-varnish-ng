@@ -5,7 +5,7 @@ varnish_ng Cookbook
 
 This is a [Chef] cookbook to manage [Varnish] using LWRP.
 
-Traditionally system runs a single Varnish service with multiple instances and multiple vhost.
+Traditionally, system runs a single Varnish service with multiple instances and multiple vhost.
 
 This cookbook provide even more flexibility and ease of management to Varnish, by setting up multiple varnish services separated from each other.
 

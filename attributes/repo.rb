@@ -12,7 +12,7 @@ default['varnish']['apt']['action'] = :add
 # varnish yum repo
 default['varnish']['yum']['enable'] = true
 default['varnish']['yum']['description'] = 'varnish cache'
-default['varnish']['yum']['gpgcheck'] = true
+default['varnish']['yum']['gpgcheck'] = false
 default['varnish']['yum']['gpgkey'] = 'http://repo.varnish-cache.org/debian/GPG-key.txt'
 default['varnish']['yum']['action'] = :create
 
