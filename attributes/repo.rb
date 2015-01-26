@@ -17,8 +17,8 @@ default['varnish']['yum']['gpgkey'] = 'http://repo.varnish-cache.org/debian/GPG-
 default['varnish']['yum']['action'] = :create
 
 default['varnish']['yum']['platform'] = value_for_platform(
-  'amazon' => { 'default' => 6},
-  'default' => { 'default' => node['version']}
+  'amazon' => { 'default' => 6 },
+  'default' => { 'default' => node['version'] }
 )
 
 default['varnish']['yum']['url'] = "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['varnish']['yum']['platform']}"
