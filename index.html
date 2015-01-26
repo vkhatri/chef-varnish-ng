@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Chef Varnish by vkhatri</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Chef Varnish</h1>
+        <p>Chef Cookbook to Install/Manage Varnish</p>
+        <p class="view"><a href="https://github.com/vkhatri/chef-varnish-ng">View the Project on GitHub <small>vkhatri/chef-varnish-ng</small></a></p>
+        <ul>
+          <li><a href="https://github.com/vkhatri/chef-varnish-ng/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/vkhatri/chef-varnish-ng/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/vkhatri/chef-varnish-ng">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="varnish_ng-cookbook" class="anchor" href="#varnish_ng-cookbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>varnish_ng Cookbook</h1>
+
+<p><a href="https://travis-ci.org/vkhatri/chef-varnish-ng"><img src="https://travis-ci.org/vkhatri/chef-varnish-ng.svg?branch=master" alt="Build Status"></a></p>
+
+<p>This is a <a href="https://www.chef.io/">Chef</a> cookbook to manage <a href="https://www.varnish-cache.org/">Varnish</a> using LWRP.</p>
+
+<p>Traditionally, system runs a single Varnish service with multiple instances and multiple vhost.</p>
+
+<p>This cookbook provide even more flexibility and ease of management to Varnish, by setting up multiple varnish services separated from each other.</p>
+
+<p>All the funcationality of a single varnish service remains the same for each LWRP resources created varnish service.</p>
+
+<p>Each varnish service created by LWRP is a separate varnish service (instance) running with its own unique configuration.</p>
+
+<p>More features and attributes will be added over time, <strong>feel free to contribute</strong>
+what you find missing!</p>
+
+<h2>
+<a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
+
+<p><a href="https://github.com/vkhatri/chef-varnish-ng">https://github.com/vkhatri/chef-varnish-ng</a></p>
+
+<h2>
+<a id="supported-platforms" class="anchor" href="#supported-platforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Platforms</h2>
+
+<p>This cookbook was tested on Ubuntu 14.04 and Amazon 2014-09 AMI. This cookbook is expected to work for CentOS, RedHat &amp; Fedora, but not yet tested.</p>
+
+<h2>
+<a id="supported-varnish-version" class="anchor" href="#supported-varnish-version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Varnish Version</h2>
+
+<p>This cookbook was tested for Varnish version 4.0. This cookbook is expected to work with  Varnish version 3.0, but not yet tested.</p>
+
+<h2>
+<a id="supported-install-types" class="anchor" href="#supported-install-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Install Types</h2>
+
+<p>Currently Varnish installation is supported <strong>ONLY</strong> via Repository Packages.</p>
+
+<h2>
+<a id="recipes" class="anchor" href="#recipes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recipes</h2>
+
+<ul>
+<li>
+<code>varnish::default</code> - recipe to install and configure varnish</li>
+<li>
+<code>varnish::install</code> - recipe to install varnish</li>
+<li>
+<code>varnish::config</code> - recipe to configure basic varnish directories/files and disable default</li>
+<li>
+<code>varnish::instance</code> - recipe to create a dummy LWRP resource, e.g. for vagrant testing</li>
+</ul>
+
+<h2>
+<a id="default-varnish-service" class="anchor" href="#default-varnish-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default varnish* Service</h2>
+
+<p>By default, recipe <code>vanrish_ng::config</code> disables default varnish service which can be controlled by node attribute <code>node['varnish']['disable_default']</code>.</p>
+
+<p>Instead of managing default varnish configuration &amp; service, this cookbook can manage more than one varnish service as a separate instance. Hence, default varnish service is disabled by default.</p>
+
+<blockquote>
+<blockquote>
+<p>This cookbook does not manage default varnish configuration and service, it can only makes sure that default <code>varnish*</code> service are not running. Default <code>varnish*</code> service management is not in the scope of this cookbook.</p>
+</blockquote>
+</blockquote>
+
+<h2>
+<a id="custom-varnish-reload-script" class="anchor" href="#custom-varnish-reload-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Varnish Reload Script</h2>
+
+<p>This cookbook creates a custom varnish service reload script to reload varnish service for a given instance sysconf file.</p>
+
+<p>Script location - <code>node['varnish']['varnish_reload_exec']</code></p>
+
+<h2>
+<a id="lwrp---varnish-instance" class="anchor" href="#lwrp---varnish-instance" aria-hidden="true"><span class="octicon octicon-link"></span></a>LWRP - Varnish Instance</h2>
+
+<p>Recipe <code>default</code> installs required varnish packages and configures common log, storage and other directories/files common for LWRP varnish resources.</p>
+
+<p>This cookbook utilizes the main feature of varnish so caled - instance. For each LWRP resource  this cookbook creates a separate unique varnish <code>service</code> as an instance.</p>
+
+<p>Each LWRP resource is a different varnish service and created with <code>-n INSTANCE</code> where LWRP resource name is varnish instance name passed to each LWRP resource service.</p>
+
+<p>One can create multiple varnish services / instances using default LWRP. Each LWRP created resource service has its own congiguration, storage directory etc.</p>
+
+<p>All LWRP resources shares a commong storage directory location and log directory location, but as each has its own instance name - all LWRP resources service are separated &amp; not related to each other.</p>
+
+<p><strong>LWRP Instance VCL File examples</strong></p>
+
+<pre><code>varnish_ng 'varnish instance name' do
+  notify_restart true
+  enable_varnishlog false
+  enable_varnishncsa true
+  listen_port 80
+  vcl_conf_cookbook 'varnish_wrapper'
+  vcl_conf_file 'default.vcl'
+  service_supports :restart =&gt; true, :start =&gt; true, :stop =&gt; true, :reload =&gt; true
+  admin_listen_port 81
+  options :tcp_keepalive_time =&gt; 3600
+end
+</code></pre>
+
+<p><strong>LWRP Instance VCL Template examples</strong></p>
+
+<pre><code>varnish_ng 'varnish instance name' do
+  notify_restart true
+  enable_varnishlog false
+  enable_varnishncsa true
+  listen_port 80
+  vcl_conf_cookbook 'varnish_wrapper'
+  vcl_conf_template 'default.vcl.erb'
+  vcl_conf_template_attrs :param =&gt; value # if any
+  service_supports :restart =&gt; true, :start =&gt; true, :stop =&gt; true, :reload =&gt; true
+  admin_listen_port 81
+  options :tcp_keepalive_time =&gt; 3600
+end
+</code></pre>
+
+<p><strong>LWRP Resource attributes</strong></p>
+
+<p>Parameters:</p>
+
+<ul>
+<li>
+<em>action (optional)</em>         - default :create, options: :create, :delete</li>
+<li>
+<em>enable_varnishlog (optional, TrueClass/FalseClass)</em> - enable/disable varnishlog service</li>
+<li>
+<em>enable_varnishncsa (optional, TrueClass/FalseClass)</em> - enable/disable varnishncsa service</li>
+<li>
+<em>varnishncsa_format (optional, String)</em> - varnishncsa log format</li>
+<li>
+<em>service_supports (optional, Hash)</em>  - varnish* services chef service resource attribute <code>supports</code>
+</li>
+<li>
+<em>service_action (optional, Array)</em>  - varnish* services chef service resource attribute <code>action</code>
+</li>
+<li>
+<em>notify_restart (optional, TrueClass/FalseClass)</em> - notifies varnish* service on config resource update</li>
+<li>
+<em>start (optional, TrueClass/FalseClass)</em> - whether to start varnish service, for debian platform_family</li>
+<li>
+<em>storage_type (optional, String)</em> - varnish storage type, options: memory, file</li>
+<li>
+<em>storage_size (optional, String)</em> - varnish storage size</li>
+<li>
+<em>listen_address (optional, String)</em> - varnish listen address</li>
+<li>
+<em>listen_port (required, String/Integer)</em> - varnish listen port</li>
+<li>
+<em>admin_listen_address (optional, String)</em> - varnish admin listen address</li>
+<li>
+<em>admin_listen_port (optional, String/Integer)</em> - varnish admin listen port</li>
+<li>
+<em>nfiles (optional, String/Integer)</em> - varnish service ulimit attribute nfiles</li>
+<li>
+<em>memlock (optional, String/Integer)</em> - varnish service ulimit attribute memlock</li>
+<li>
+<em>nprocs (optional, String/Integer)</em> - varnish service ulimit attribute nprocs</li>
+<li>
+<em>corefile (optional, String/Integer)</em> - varnish service ulimit attribute corefile</li>
+<li>
+<em>reload_vcl (optional, String/Integer)</em> - varnish init service attribute</li>
+<li>
+<em>ttl (optional, String/Integer)</em> - varnish parameter ttl</li>
+<li>
+<em>options (optional, Hash)</em> - varnish extra service parameter key/value pair</li>
+<li>
+<em>vcl_conf_cookbook (optional, String)</em> - varnish vcl conf cookbook name</li>
+<li>
+<em>vcl_conf_file (optional, String)</em> - varnish vcl conf file name</li>
+<li>
+<em>vcl_conf_template (optional, String)</em> - varnish vcl conf template name</li>
+<li>
+<em>vcl_conf_template_attrs (optional, Hash)</em> - varnish vcl conf template attribute if any</li>
+</ul>
+
+<h2>
+<a id="cookbook-core-attributes" class="anchor" href="#cookbook-core-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cookbook Core Attributes</h2>
+
+<ul>
+<li><p><code>default['varnish']['manage']</code> (default: <code>version</code>): varnish package repository version</p></li>
+<li><p><code>default['varnish']['user']</code> (default: <code>varnish</code>): varnish user</p></li>
+<li><p><code>default['varnish']['group']</code> (default: <code>varnish</code>): varnish group</p></li>
+<li><p><code>default['varnish']['log_user']</code> (default: <code>calculated</code>): varnish log service user</p></li>
+<li><p><code>default['varnish']['log_group']</code> (default: <code>calculated</code>): varnish log service group</p></li>
+<li><p><code>default['varnish']['conf_dir']</code> (default: <code>/etc/varnish</code>): varnish configuration directory</p></li>
+<li><p><code>default['varnish']['sysconf_dir']</code> (default: <code>calculated</code>): varnish service sysconf directory</p></li>
+<li><p><code>default['varnish']['log_dir']</code> (default: <code>/var/log/varnish</code>): varnish log directory</p></li>
+<li><p><code>default['varnish']['storage_dir']</code> (default: <code>/var/lib/varnish</code>): varnish storage directory</p></li>
+<li><p><code>default['varnish']['manage_secret']</code> (default: <code>false</code>): whether to manage varnish secret file content</p></li>
+<li><p><code>default['varnish']['secret']</code> (default: <code>nil</code>): varnish secret file content</p></li>
+<li><p><code>default['varnish']['secret_file']</code> (default: <code>/etc/varnish/secret</code>): varnish secret file</p></li>
+<li><p><code>default['varnish']['disable_default']</code> (default: <code>true</code>): disable varnish default service</p></li>
+<li><p><code>default['varnish']['varnish_reload_exec']</code> (default: <code>calculated</code>): varnish init service reload shell script location</p></li>
+</ul>
+
+<h2>
+<a id="cookbook-repository-attributes" class="anchor" href="#cookbook-repository-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cookbook Repository Attributes</h2>
+
+<ul>
+<li><p><code>default['varnish']['yum']['enable']</code> (default: <code>true</code>): varnish repo yum attribute</p></li>
+<li><p><code>default['varnish']['yum']['description']</code> (default: <code>varnish cache</code>): varnish repo yum attribute</p></li>
+<li><p><code>default['varnish']['yum']['gpgcheck']</code> (default: <code>true</code>): varnish repo yum attribute</p></li>
+<li><p><code>default['varnish']['yum']['gpgkey']</code> (default: <code>…</code>): varnish repo yum attribute</p></li>
+<li><p><code>default['varnish']['yum']['action']</code> (default: <code>:create</code>): varnish repo yum attribute</p></li>
+<li><p><code>default['varnish']['apt']['uri']</code> (default: <code>...</code>): varnish repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['enable']</code> (default: <code>true</code>): varnish repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['distribution']</code> (default: <code>calculated</code>): varnish repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['components']</code> (default: <code>calculated</code>): varnish repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['keyserver']</code> (default: <code>keyserver.ubuntu.com</code>): varnish repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['key']</code> (default: <code>C4DEFFEB</code>): varnish4 repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['deb_src']</code> (default: <code>true</code>): varnish repo apt attribute</p></li>
+<li><p><code>default['varnish']['apt']['action']</code> (default: <code>:add</code>): varnish repo apt attribute</p></li>
+</ul>
+
+<h2>
+<a id="cookbook-lwrp-resource-default-attributes" class="anchor" href="#cookbook-lwrp-resource-default-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cookbook LWRP Resource Default Attributes</h2>
+
+<ul>
+<li><p><code>default['varnish']['instance']['enable_varnishlog']</code> (default: <code>false</code>): whether to setup varnishlog service</p></li>
+<li><p><code>default['varnish']['instance']['enable_varnishncsa']</code> (default: <code>true</code>): whether to setup varnishncsa service</p></li>
+<li><p><code>default['varnish']['instance']['ncsa_log_format']</code> (default: <code>...</code>): varnishncsa service log format</p></li>
+<li><p><code>default['varnish']['instance']['service_supports']</code> (default: <code>nil</code>): varnish service <code>supports</code> attribute</p></li>
+<li><p><code>default['varnish']['instance']['service_action']</code> (default: <code>[:start, :enable]</code>): varnish service <code>action</code> attribute</p></li>
+<li><p><code>default['varnish']['instance']['notify_restart']</code> (default: <code>true</code>): whether to notify varnish service on resource update</p></li>
+<li><p><code>default['varnish']['instance']['storage_type']</code> (default: <code>file</code>): varnish service storage type</p></li>
+<li><p><code>default['varnish']['instance']['storage_size']</code> (default: <code>1G</code>): varnish service storage size</p></li>
+<li><p><code>default['varnish']['instance']['nfiles']</code> (default: <code>131072</code>): varnish service parameter <code>nfiles</code>, LWRP default value</p></li>
+<li><p><code>default['varnish']['instance']['memlock']</code> (default: <code>82000</code>): varnish service parameter <code>memlock</code>, LWRP default value</p></li>
+<li><p><code>default['varnish']['instance']['nprocs']</code> (default: <code>unlimited</code>): varnish service parameter <code>nprocs</code>, LWRP default value</p></li>
+<li><p><code>default['varnish']['instance']['corefile']</code> (default: <code>unlimited</code>): varnish service parameter <code>corefile</code>, LWRP default value</p></li>
+<li><p><code>default['varnish']['instance']['reload_vcl']</code> (default: <code>1</code>): varnish service parameter <code>reload_vcl</code>, LWRP default value</p></li>
+<li><p><code>default['varnish']['instance']['ttl']</code> (default: <code>3600</code>): varnish service parameter <code>ttl</code>, LWRP default value</p></li>
+<li><p><code>default['varnish']['instance']['options']</code> (default: <code>{}</code>): varnish service <code>-p ..</code> parameters</p></li>
+<li><p><code>default['varnish']['instance']['vcl_conf_cookbook']</code> (default: <code>varnish_ng</code>): varnish vcl cookbook</p></li>
+<li><p><code>default['varnish']['instance']['vcl_conf_file']</code> (default: <code>nil</code>): varnish vcl file, overrides <code>vcl_conf_template</code> attribute</p></li>
+<li><p><code>default['varnish']['instance']['vcl_conf_template']</code> (default: <code>nil</code>): varnish vcl template</p></li>
+<li><p><code>default['varnish']['instance']['vcl_conf_template_attrs']</code> (default: <code>{}</code>): varnish vcl template attributes if any</p></li>
+<li><p><code>default['varnish']['instance']['start']</code> (default: <code>yes</code>): varnish init service attribute START for debian platform_family</p></li>
+</ul>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork the repository on Github</li>
+<li>Create a named feature branch (like <code>add_component_x</code>)</li>
+<li>Write your change</li>
+<li>Write tests for your change (if applicable)</li>
+<li>Run the tests (<code>rake</code>), ensuring they all pass</li>
+<li>Write new resource/attribute description to <code>README.md</code>
+</li>
+<li>Write description about changes to PR</li>
+<li>Submit a Pull Request using Github</li>
+</ol>
+
+<h2>
+<a id="copyright--license" class="anchor" href="#copyright--license" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright &amp; License</h2>
+
+<p>Authors:: Virender Khatri and <a href="https://github.com/vkhatri/chef-varnish-ng/graphs/contributors">Contributors</a></p>
+
+<pre>
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</pre>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/vkhatri">vkhatri</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
