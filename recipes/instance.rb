@@ -24,5 +24,7 @@ varnish_ng 'dummy' do
   enable_varnishncsa true
   notify_restart true
   vcl_conf_file "default#{node['varnish']['version']}.vcl"
+  storage_type 'memory'
+  storage_size '128M'
   service_supports :restart => true, :start => true, :stop => true, :reload => true
 end
