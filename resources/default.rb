@@ -32,16 +32,15 @@ attribute :start,         :kind_of => [TrueClass, FalseClass], :default => node[
 attribute :storage_type,  :kind_of => String, :default => node['varnish']['instance']['storage_type']
 attribute :storage_size,  :kind_of => String, :default => node['varnish']['instance']['storage_size']
 
-attribute :listen_address,  :kind_of => [String, Integer], :default => nil
+attribute :listen_address,  :kind_of => String, :default => nil
 attribute :listen_port,     :kind_of => [String, Integer], :required => true, :default => nil
 attribute :admin_listen_address, :kind_of => String, :default => '127.0.0.1'
-attribute :admin_listen_port,   :kind_of => [String, Integer], :required => true, :default => nil
+attribute :admin_listen_port,   :kind_of => [String, Integer], :default => nil
 attribute :thread_pools,        :kind_of => [String, Integer], :default => node['varnish']['instance']['thread_pools']
 attribute :thread_pool_delay, :kind_of => [String, Integer], :default => node['varnish']['instance']['thread_pool_delay']
 attribute :min_threads, :kind_of => [String, Integer], :default => node['varnish']['instance']['min_threads']
 attribute :max_threads, :kind_of => [String, Integer], :default => node['varnish']['instance']['max_threads']
 attribute :thread_timeout,  :kind_of => [String, Integer], :default => node['varnish']['instance']['thread_timeout']
-attribute :sess_workspace,  :kind_of => [String, Integer], :default => node['varnish']['instance']['sess_workspace']
 attribute :nfiles,  :kind_of => [String, Integer], :default => node['varnish']['instance']['nfiles']
 attribute :memlock, :kind_of => [String, Integer], :default => node['varnish']['instance']['memlock']
 attribute :nprocs, :kind_of => [String, Integer], :default => node['varnish']['instance']['nprocs']

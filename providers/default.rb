@@ -49,7 +49,6 @@ action :create do
               :min_threads => new_resource.min_threads,
               :max_threads => new_resource.max_threads,
               :thread_timeout => new_resource.thread_timeout,
-              #:sess_workspace => new_resource.sess_workspace,
               :nfiles => new_resource.nfiles,
               :memlock => new_resource.memlock,
               :nprocs => new_resource.nprocs,

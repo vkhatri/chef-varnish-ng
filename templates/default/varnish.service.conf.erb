@@ -97,7 +97,9 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
              <% end -%>
              -t ${VARNISH_TTL} \
              -u <%= @user -%> -g <%= @group -%> \
+             <% if @secret_file -%>
              -S ${VARNISH_SECRET_FILE} \
+             <% end -%>
              -p thread_pools=${VARNISH_THREAD_POOLS} \
              -p thread_pool_min=${VARNISH_MIN_THREADS} \
              -p thread_pool_max=${VARNISH_MAX_THREADS} \
