@@ -9,6 +9,9 @@
 # shell script fragment.
 #
 
+# Should we start varnishd at boot?  Set to "no" to disable.
+START=<%= @start %>
+
 # Maximum number of open files (for ulimit -n)
 NFILES=<%= @nfiles %>
 

@@ -24,3 +24,4 @@ default['varnish']['instance']['vcl_conf_cookbook'] = 'varnish_ng'
 default['varnish']['instance']['vcl_conf_file'] = nil
 default['varnish']['instance']['vcl_conf_template'] = nil
 default['varnish']['instance']['vcl_conf_template_attrs'] = {}
+default['varnish']['instance']['start'] = 'yes'

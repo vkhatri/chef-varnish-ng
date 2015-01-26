@@ -28,7 +28,7 @@ attribute :service_supports,    :kind_of => Hash, :default => node['varnish']['i
 attribute :service_action,      :kind_of => Array, :default => node['varnish']['instance']['service_action']
 attribute :notify_restart,      :kind_of => [TrueClass, FalseClass], :default => node['varnish']['instance']['notify_restart']
 
-attribute :start,         :kind_of => [TrueClass, FalseClass], :default => true
+attribute :start,         :kind_of => [TrueClass, FalseClass], :default => node['varnish']['instance']['start']
 attribute :storage_type,  :kind_of => String, :default => node['varnish']['instance']['storage_type']
 attribute :storage_size,  :kind_of => String, :default => node['varnish']['instance']['storage_size']
 

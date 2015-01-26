@@ -37,6 +37,7 @@ action :create do
               :config_file => ::File.join(node['varnish']['conf_dir'], "#{new_resource.name}.vcl"),
               :storage_dir => node['varnish']['storage_dir'],
               :secret_file => node['varnish']['secret_file'],
+              :start => new_resource.start,
               :listen_address => new_resource.listen_address,
               :listen_port => new_resource.listen_port,
               :admin_listen_address => new_resource.admin_listen_address,
