@@ -16,13 +16,9 @@ default['varnish']['yum']['gpgcheck'] = true
 default['varnish']['yum']['gpgkey'] = 'http://repo.varnish-cache.org/debian/GPG-key.txt'
 default['varnish']['yum']['action'] = :create
 
-case node['platform']
-when 'amazon'
-  default['varnish']['yum']['platform'] = 6
-when 'redhat', 'centos'
-  default['varnish']['yum']['platform'] = node['version']
-else
-  default['varnish']['yum']['platform'] = 7
-end
+default['varnish']['yum']['platform'] = value_for_platform(
+  'amazon' => { 'default' => 6},
+  'default' => { 'default' => node['version']}
+)
 
 default['varnish']['yum']['url'] = "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['varnish']['yum']['platform']}"
