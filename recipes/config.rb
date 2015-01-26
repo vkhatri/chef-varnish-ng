@@ -37,10 +37,12 @@ directory node['varnish']['log_dir'] do
     owner node['varnish']['userlog']
     group node['varnish']['grouplog']
   end
+  recursive true
   mode 0755 # keeping it sane, varies for platform_family
 end
 
 directory node['varnish']['storage_dir'] do
+  recursive true
   mode 0755
 end
 
